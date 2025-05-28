@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ mail.predmet }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .back { margin-bottom: 20px; display: inline-block; color: #007BFF; text-decoration: none; font-weight: bold; }
+        .back:hover { text-decoration: underline; }
+        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('inbox') }}" class="back">&lt; Vratit sa do inboxu</a>
+    <div class="container">
+        <h2>{{ mail.predmet }}</h2>
+        <p><strong>Od:</strong> {{ mail.odosielatel }}</p>
+        <hr>
+        <div class="email-content">
+            {{ mail.obsah | safe }}
+        </div>
+    </div>
+</body>
+</html>
