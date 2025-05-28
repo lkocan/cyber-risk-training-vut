@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCADA Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h3 {
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-container {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            padding: 5px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .log-box {
+            background: #eee;
+            padding: 10px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+        .flag-box {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f6e3fa;
+            border: 1px solid #b279d6;
+            color: #880e91;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>SCADA Monitoring</h1>
+    <p>Prihlaseny uzivatel: <b>{{ user }}</b></p>
+    <a href="/logout"><button>Odhlasit</button></a>
+    <div class="container">
+        <h3>Hodnoty SCADA senzorov</h3>
+        <p>Hladina vody: <b>{{ scada_data["water_level"] }}</b> m</p>
+        <p>Tlak: <b>{{ scada_data["pressure"] }}</b> bar</p>
+        <p>Teplota: <b>{{ scada_data["temperature"] }}</b> °C</p>
+
+        {% if flag_message %}
+        <div class="flag-box">
+            <strong>{{ flag_message }}</strong>
+        </div>
+        {% endif %}
+
+        <div class="form-container">
+            <h3>Zmenit hodnoty SCADA</h3>
+            <form method="POST">
+                <label for="parameter">Vyber parameter:</label>
+                <select name="parameter">
+                    <option value="water_level">Hladina vody</option>
+                    <option value="pressure">Tlak</option>
+                    <option value="temperature">Teplota</option>
+                </select>
+                <br>
+                <label for="value">Nova hodnota:</label>
+                <input type="text" name="value" required>
+                <button type="submit">Aktualizovat</button>
+            </form>
+        </div>
+
+        <h3>Historia zmien</h3>
+        <div class="log-box">
+            {% for log in logs %}
+                <p>{{ log }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
