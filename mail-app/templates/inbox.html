@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .mail { padding: 10px; border-bottom: 1px solid #ccc; }
+        .mail:hover { background-color: #f0f0f0; cursor: pointer; }
+        h1 { color: #333; display: inline-block; }
+        .logout-btn { float: right; background-color: #d9534f; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; }
+        .logout-btn:hover { background-color: #c9302c; }
+    </style>
+</head>
+<body>
+    <h1>📩 Inbox</h1>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Odhlásiť sa</a>
+    
+    {% for mail in maily %}
+        <div class="mail" onclick="window.location.href='/mail/{{ mail.id }}'">
+            <strong>{{ mail.predmet }}</strong> - {{ mail.odosielatel }}
+        </div>
+    {% endfor %}
+</body>
+</html>
